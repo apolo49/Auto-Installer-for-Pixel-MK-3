@@ -1,0 +1,32 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1006,5): warning MSB8027: Two or more files with the name of Main.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are src\source\Main.cpp, src\vender\imgui\main.cpp.
+  Using triplet "x86-windows-static" from "C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\jsoncpp-master\jsoncpp-master\vcpkg\installed\x86-windows-static\"
+  The Vcpkg manifest was disabled, but we found a manifest file in \. You may want to enable vcpkg manifests in your properties page or pass /p:VcpkgEnableManifest=true to the msbuild invocation.
+  Source.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': macro redefinition
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\libs\glfw\include\GLFW\glfw3.h(123): message : see previous definition of 'APIENTRY'
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\headers\Downloader.h(47,31): warning C4244: '=': conversion from 'curl_off_t' to 'float', possible loss of data
+  CreateProfile.cpp
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\headers\Downloader.h(47,31): warning C4244: '=': conversion from 'curl_off_t' to 'float', possible loss of data
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\source\CreateProfile.cpp(4,20): warning C4305: 'argument': truncation from 'double' to 'const _Ty'
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\source\CreateProfile.cpp(11,20): warning C4305: 'argument': truncation from 'double' to 'const _Ty'
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\source\CreateProfile.cpp(19,20): warning C4305: 'argument': truncation from 'double' to 'const _Ty'
+          with
+          [
+              _Ty=float
+          ]
+  Main.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': macro redefinition
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\libs\glfw\include\GLFW\glfw3.h(123): message : see previous definition of 'APIENTRY'
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\headers\Downloader.h(47,31): warning C4244: '=': conversion from 'curl_off_t' to 'float', possible loss of data
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\source\Main.cpp(259,16): warning C4156: deletion of an array expression without using the array form of 'delete'; array form substituted
+C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\src\source\Main.cpp(259,16): warning C4154: deletion of an array expression; conversion to pointer supplied
+  Generating Code...
+  Auto-Installer for Pixel MK 3.vcxproj -> C:\Users\Joe\source\repos\Auto-Installer for Pixel MK 3\Debug\Auto-Installer for Pixel MK 3.exe
