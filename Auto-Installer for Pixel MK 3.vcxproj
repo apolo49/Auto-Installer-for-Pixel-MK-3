@@ -229,7 +229,6 @@
     <ClCompile Include="src\vender\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="NexaSlab.ttf" />
     <Font Include="src\source\NexaSlab.ttf" />
   </ItemGroup>
   <ItemGroup>

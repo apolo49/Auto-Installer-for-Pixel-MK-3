@@ -113,7 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="src\source\NexaSlab.ttf" />
-    <Font Include="NexaSlab.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Auto-Installer for Pixel MK 3.rc">
