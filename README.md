@@ -4,7 +4,7 @@ This is a _basic_ installer for a Minecraft modpack for me and my friends.
 It is very unoptimised and probably quite unstable and prone to injections, currently I haven't tested it on any OS other than Windows 10 and have only compiled it using VS2019.
 The program itself, if you are smart enough, would be very easy to generalise as everything is grouped into general functions and there are few hardcoded values.
 
-####TODO:
+###TODO:
 	-Add stb image to load in an icon for the GLFW window.
 	-Generalise using JSON files and _possibly_ upload as an alternative to Technic or FTB, as a native way to install modpacks.
 		-Remove hardcoded progress multiplier in extract zip function.
