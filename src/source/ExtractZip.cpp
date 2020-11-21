@@ -14,8 +14,6 @@
 */
 int fileHandling::Extractor::ExtractAllFilesFromZip(const std::string& strDirectory, const std::string& strZipFile, boost::container::vector<bool> ResAndOpts, ProgressCallback ProgressStrategy, ErrorCallback ErrorStrategy)
 {
-	bool bRes = false;
-
 	std::string strOutputDirectory(strDirectory);
 	if (!fs::is_directory(strDirectory) || !fs::exists(strZipFile))
 		return 0;
@@ -32,7 +30,6 @@ int fileHandling::Extractor::ExtractAllFilesFromZip(const std::string& strDirect
 	char buf[255];
 	int err;
 	zip* archive;
-	const char* prg;
 	if ((archive = zip_open(strZipFile.c_str(), 0, &err)) == NULL) {
 		zip_error_to_str(buf, sizeof(buf), err, errno);
 		std::cout << "Can't open zip archive '" << archive << "': " << buf << std::endl;

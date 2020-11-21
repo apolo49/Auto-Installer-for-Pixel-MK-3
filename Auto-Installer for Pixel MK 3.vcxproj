@@ -162,8 +162,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib/libzippp;$(ProjectDir)lib/miniz;$(ProjectDir)lib/curl;$(ProjectDir)lib/zlib;$(ProjectDir)lib/libcrypto;$(ProjectDir)lib/jsoncpp;$(ProjectDir)lib/glfw;$(ProjectDir)lib/glew;$(ProjectDir)lib/libzip;$(ProjectDir)lib/elzip;$(ProjectDir)lib/Boost</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl.lib;libcrypto.lib;libssl.lib;libzippp_static.lib;zip.lib;minizip.lib;zlibstatic.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib/miniz;$(ProjectDir)lib/curl;$(ProjectDir)lib/zlib;$(ProjectDir)lib/libcrypto;$(ProjectDir)lib/jsoncpp;$(ProjectDir)lib/glfw;$(ProjectDir)lib/glew;$(ProjectDir)lib/libzip;$(ProjectDir)lib/Boost</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;libcrypto.lib;libssl.lib;zip.lib;minizip.lib;zlibstatic.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -186,8 +186,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib/libzippp;$(ProjectDir)lib/miniz;$(ProjectDir)lib/curl;$(ProjectDir)lib/zlib;$(ProjectDir)lib/libcrypto;$(ProjectDir)lib/jsoncpp;$(ProjectDir)lib/glfw;$(ProjectDir)lib/glew;$(ProjectDir)lib/libzip;$(ProjectDir)lib/elzip;$(ProjectDir)lib/Boost</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl.lib;libcrypto.lib;libssl.lib;libzippp_static.lib;zip.lib;minizip.lib;zlibstatic.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib/miniz;$(ProjectDir)lib/curl;$(ProjectDir)lib/zlib;$(ProjectDir)lib/libcrypto;$(ProjectDir)lib/jsoncpp;$(ProjectDir)lib/glfw;$(ProjectDir)lib/glew;$(ProjectDir)lib/libzip;$(ProjectDir)lib/Boost</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;libcrypto.lib;libssl.lib;zip.lib;minizip.lib;zlibstatic.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>

@@ -8,7 +8,6 @@
 #include <boost/container/vector.hpp>
 
 #include "../vender/zip.hpp"
-//#include <elzip/elzip.hpp>
 #define DefaultProgressCallback [](double dA, double dB, const char* name) { dA; dB; }
 #define DefaultErrorCallback [](const std::string& strErrorMsg) { std::cout << strErrorMsg << std::endl; }
 #define MAX_FILE_BUFFER		(32 * 20 * 820)
