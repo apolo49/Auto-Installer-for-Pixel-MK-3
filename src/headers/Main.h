@@ -2,22 +2,20 @@
 #pragma comment(lib, "crypt32.lib")
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
-#include <cstdlib>
-#include <exception>
 #include <string>
-#include <vector>
+#include <boost/container/vector.hpp>
 #include <thread>
 #include <future>
 #include <chrono>
-#include <atomic>
 #include "../vender/imgui/imgui.h"
 #include "../vender/imgui/imgui_impl_glfw.h"
 #include "../vender/imgui/imgui_impl_opengl3.h"
 #include "ImFileBrowser.h"
+#include "TextUrl.h"
 #include "CreateProfile.h"
+#include "Font.h"
+#include "Logger.h"
 
 #ifdef _WIN32
 #include <sysinfoapi.h>
@@ -46,7 +44,7 @@ public:
 	}
 
 	static int Begin();
-	static void WindowLoop(GLFWwindow* window);
+	static void WindowLoop(GLFWwindow* window, Logger* Log);
 	static int Cleanup(GLFWwindow* window) {
 		try {
 			ImGui_ImplOpenGL3_Shutdown();

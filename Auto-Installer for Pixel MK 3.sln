@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Auto-Installer for Pixel MK 3", "Auto-Installer for Pixel MK 3.vcxproj", "{8B4BAC06-A5B2-4088-82DB-8F40FC039439}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestInstall", "..\TestInstall\TestInstall.vcxproj", "{113F83CA-943F-4722-AEC2-3EC97204D8D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{8B4BAC06-A5B2-4088-82DB-8F40FC039439}.Release|x64.Build.0 = Release|x64
 		{8B4BAC06-A5B2-4088-82DB-8F40FC039439}.Release|x86.ActiveCfg = Release|Win32
 		{8B4BAC06-A5B2-4088-82DB-8F40FC039439}.Release|x86.Build.0 = Release|Win32
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Debug|x64.ActiveCfg = Debug|x64
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Debug|x64.Build.0 = Debug|x64
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Debug|x86.ActiveCfg = Debug|Win32
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Debug|x86.Build.0 = Debug|Win32
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Release|x64.ActiveCfg = Release|x64
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Release|x64.Build.0 = Release|x64
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Release|x86.ActiveCfg = Release|Win32
+		{113F83CA-943F-4722-AEC2-3EC97204D8D0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

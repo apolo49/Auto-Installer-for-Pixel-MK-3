@@ -109,17 +109,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>BOOST_MSVC;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ZIP_STATIC;BOOST_MSVC;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Projectdir)libs\curl\include;$(Projectdir)libs\boost\include;$(Projectdir)libs\json\include;$(Projectdir)libs\glfw\include;$(Projectdir)libs\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Projectdir)include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(Projectdir)libs\curl\lib;$(Projectdir)libs\boost\lib;$(Projectdir)libs\json\lib;$(Projectdir)libs\GLFW\lib-vc2010-32;$(Projectdir)libs\glew\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl-d.lib;zlibd.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Projectdir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zip.lib;libcurl-d.lib;libcrypto.lib;libssl.lib;zlibstaticd.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -129,17 +129,17 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>BOOST_MSVC;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ZIP_STATIC;BOOST_MSVC;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Projectdir)libs\curl\include;$(Projectdir)libs\boost\include;$(Projectdir)libs\json\include;$(Projectdir)libs\glfw\include;$(Projectdir)libs\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Projectdir)include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(Projectdir)libs\curl\lib;$(Projectdir)libs\boost\lib;$(Projectdir)libs\json\lib;$(Projectdir)libs\GLFW\lib-vc2010-32;$(Projectdir)libs\glew\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl-d.lib;zlibd.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Projectdir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>zip.lib;libcurl-d.lib;libcrypto.lib;libssl.lib;zlibstaticd.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -151,10 +151,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>BOOST_MSVC;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;ZLIB_WINAPI;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Projectdir)libs\poco\include;$(Projectdir)libs\boost\include;$(Projectdir)libs\json\include;$(Projectdir)libs\glfw\include;$(Projectdir)libs\glew\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(Projectdir)include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -162,8 +162,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(Projectdir)libs\poco\lib;$(Projectdir)libs\boost\lib;$(Projectdir)libs\json\lib;$(Projectdir)libs\GLFW\lib-vc2010-32;$(Projectdir)libs\glew\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>PocoCppParser.lib;PocoCrypto.lib;PocoData.lib;PocoDataODBC.lib;PocoDataSQLite.lib;PocoEncodings.lib;PocoFoundation.lib;PocoJSON.lib;PocoMongoDB.lib;PocoNet.lib;PocoNetSSL.lib;PocoRedis.lib;PocoSevenZip.lib;PocoUtil.lib;PocoXML.lib;PocoZip.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib/libzippp;$(ProjectDir)lib/miniz;$(ProjectDir)lib/curl;$(ProjectDir)lib/zlib;$(ProjectDir)lib/libcrypto;$(ProjectDir)lib/jsoncpp;$(ProjectDir)lib/glfw;$(ProjectDir)lib/glew;$(ProjectDir)lib/libzip;$(ProjectDir)lib/elzip;$(ProjectDir)lib/Boost</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;libcrypto.lib;libssl.lib;libzippp_static.lib;zip.lib;minizip.lib;zlibstatic.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -175,10 +175,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>BOOST_MSVC;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;ZLIB_WINAPI;BOOST_ASIO_NO_DEFAULT_LINKED_LIBS;_CRT_SECURE_NO_WARNINGS;_GLFW_WIN32;_GLFW_WGL;_GLFW_USE_OPENGL;STATIC_CONCPP;GLEW_STATIC;_MBCS;WIN32_LEAN_AND_MEAN;CPPCONN_LIB_BUILD;CPPCONN_PUBLIC_FUNC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(Projectdir)libs\poco\include;$(Projectdir)libs\boost\include;$(Projectdir)libs\json\include;$(Projectdir)libs\glfw\include;$(Projectdir)libs\glew\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(Projectdir)include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -186,19 +186,25 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(Projectdir)libs\poco\lib;$(Projectdir)libs\boost\lib;$(Projectdir)libs\json\lib;$(Projectdir)libs\GLFW\lib-vc2010-32;$(Projectdir)libs\glew\lib\Release\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>PocoCppParser.lib;PocoCrypto.lib;PocoData.lib;PocoDataODBC.lib;PocoDataSQLite.lib;PocoEncodings.lib;PocoFoundation.lib;PocoJSON.lib;PocoMongoDB.lib;PocoNet.lib;PocoNetSSL.lib;PocoRedis.lib;PocoSevenZip.lib;PocoUtil.lib;PocoXML.lib;PocoZip.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib/libzippp;$(ProjectDir)lib/miniz;$(ProjectDir)lib/curl;$(ProjectDir)lib/zlib;$(ProjectDir)lib/libcrypto;$(ProjectDir)lib/jsoncpp;$(ProjectDir)lib/glfw;$(ProjectDir)lib/glew;$(ProjectDir)lib/libzip;$(ProjectDir)lib/elzip;$(ProjectDir)lib/Boost</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;libcrypto.lib;libssl.lib;libzippp_static.lib;zip.lib;minizip.lib;zlibstatic.lib;libboost_date_time-vc142-mt-sgd-x32-1_73.lib;libboost_regex-vc142-mt-sgd-x32-1_73.lib;libboost_coroutine-vc142-mt-sgd-x32-1_73.lib;libboost_system-vc142-mt-sgd-x32-1_73.lib;jsoncpp.lib;Shlwapi.lib;urlmon.lib;Ws2_32.lib;Wldap32.lib;legacy_stdio_definitions.lib;glew32s.lib;glfw3.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\headers\CreateProfile.h" />
     <ClInclude Include="src\headers\Downloader.h" />
+    <ClInclude Include="src\headers\ExtractZip.h" />
+    <ClInclude Include="src\headers\Font.h" />
     <ClInclude Include="src\headers\ImFileBrowser.h" />
+    <ClInclude Include="src\headers\Logger.h" />
     <ClInclude Include="src\headers\Main.h" />
     <ClInclude Include="src\headers\Progress Indicators.h" />
+    <ClInclude Include="src\headers\TextUrl.h" />
+    <ClInclude Include="src\vender\zip.hpp" />
     <ClInclude Include="src\vender\imgui\imconfig.h" />
     <ClInclude Include="src\vender\imgui\imgui.h" />
     <ClInclude Include="src\vender\imgui\imgui_impl_glfw.h" />
@@ -212,6 +218,7 @@
   <ItemGroup>
     <ClCompile Include="src\source\CreateProfile.cpp" />
     <ClCompile Include="src\source\Downloader.cpp" />
+    <ClCompile Include="src\source\ExtractZip.cpp" />
     <ClCompile Include="src\source\Main.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\vender\imgui\imgui.cpp" />
@@ -220,13 +227,17 @@
     <ClCompile Include="src\vender\imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="src\vender\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\vender\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\vender\imgui\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="NexaSlab.ttf" />
     <Font Include="src\source\NexaSlab.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Auto-Installer for Pixel MK 3.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

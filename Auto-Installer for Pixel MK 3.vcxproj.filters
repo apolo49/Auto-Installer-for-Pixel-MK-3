@@ -57,6 +57,24 @@
     <ClInclude Include="src\vender\json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\headers\ExtractZip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\TextUrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\headers\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vender\zip.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -89,12 +107,22 @@
     <ClCompile Include="src\vender\imgui\imgui_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\vender\imgui\main.cpp">
+    <ClCompile Include="src\source\ExtractZip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Font Include="src\source\NexaSlab.ttf" />
     <Font Include="NexaSlab.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Auto-Installer for Pixel MK 3.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
