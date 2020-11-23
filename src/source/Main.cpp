@@ -1,3 +1,8 @@
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_ONLY_PNG
+#define STBI_NO_STDIO
+#define STBI_NO_HDR
+#include "../vender/stb_image.h"
 #include "../headers/Main.h"
 
 uint64_t Main::PUSystemMemory = 0;
@@ -5,7 +10,8 @@ long Main::MemoryKB = 0;
 std::future<int> Main::Install;
 
 int Main::Begin() {
-	Logger log("Log");
+	int x, y, n;
+	Logger log = Logger();
 	glfwSetErrorCallback(glfw_error_callback);
 	log.write("Set GLFW error call back.");
 	log.write("Attempting to initialise GLFW.");
@@ -95,9 +101,23 @@ int Main::Begin() {
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
+	unsigned char* data = stbi_load_from_memory(resource::icon, resource::icon_size, &x, &y, &n, 4);
+	GLFWimage Icon;
+	Icon.pixels = data;
+	Icon.height = y;
+	Icon.width = x;
+
+	glfwSetWindowIcon(window, 1, &Icon);
+	stbi_image_free(data);
+
 	WindowLoop(window, &log);
-	log.~Logger();
-	return Cleanup(window);
+	try {
+		return Cleanup(window, &log);
+	}
+	catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
 }
 
 void Main::WindowLoop(GLFWwindow* window, Logger* log) {
@@ -115,7 +135,7 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	log->write("Creating fonts");
 	ImFontConfig LtlFont_cfg;
 	LtlFont_cfg.FontDataOwnedByAtlas = false;
-	LtlFont_cfg.FontData = font::NexaSlab;
+	LtlFont_cfg.FontData = resource::NexaSlab;
 	LtlFont_cfg.FontDataSize = 77028;
 
 	ImFontConfig StdFont_cfg = LtlFont_cfg;
@@ -142,6 +162,7 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	}
 	else
 		log->write("Failed to find .minecraft location", 1);
+
 	log->write("Setting Java location");
 	std::string JavaDir = "C:/Program Files/Java";
 #elif defined(__APPLE__)
@@ -170,15 +191,15 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 #endif
 	log->write("Identifying amount of Java directories");
 	size_t AmtOfJavaDirs = JavaDirs.size();
-	log->write("Amount of Java Dirs: " + AmtOfJavaDirs);
+	log->write("Number of Java Dirs: " + std::to_string(AmtOfJavaDirs));
 	int Chosen = 0;
 
 	static char PixelMKResultDir[256] = "";
 
-	log->write("Checking to see if Forge is installed");
+	log->write("Checking to see if Forge is installed and if Java is installed");
 	boost::container::vector<bool> options = { true, true, true, CheckForge(bufMCDir),  (AmtOfJavaDirs <= 0) ? false : true };
 	boost::container::vector<std::string> paths;
-	int MemoryGB = 8;
+	int MemoryGB = 9;
 	int MaxMemory;
 
 	if (MemoryKB != 0)
@@ -195,7 +216,6 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	char code[18] = "";
 
 	log->write("Entering main loop.");
-	log->~Logger();
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -247,7 +267,7 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 			}
 
 			ImGui::Text("How much memory do you wish to give the modpack (in GB)?");
-			ImGui::SliderInt("##Memory", &MemoryGB, 8, MaxMemory);
+			ImGui::SliderInt("##Memory", &MemoryGB, 9, MaxMemory);
 
 			ImGui::Checkbox("Do you want the PureBDCraft Resourcepack that pairs with this modpack?", &options[0]);
 			ImGui::Checkbox("Do you want the default option settings for this modpack?", &(options[1]));
@@ -373,14 +393,13 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 				JavaDirs.at(Chosen).path().string()
 	#endif
 			};
-		}
+			}
 		else {
 			paths = { PixelMKResultDir, bufMCDir,"" };
 		}
-	}
-	log->open();
+		}
 	log->write("Exiting main loop");
-}
+	}
 
 bool Main::CheckForge(std::string MCDir) {
 	if (fileHandling::IsFile(MCDir + "versions/1.12.2-forge-14.23.5.2854/1.12.2-forge-14.23.5.2854.json") &&

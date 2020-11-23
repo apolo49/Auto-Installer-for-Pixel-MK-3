@@ -8,6 +8,7 @@
 #include <thread>
 #include <future>
 #include <chrono>
+#include < fcntl.h >
 #include "../vender/imgui/imgui.h"
 #include "../vender/imgui/imgui_impl_glfw.h"
 #include "../vender/imgui/imgui_impl_opengl3.h"
@@ -16,6 +17,7 @@
 #include "CreateProfile.h"
 #include "Font.h"
 #include "Logger.h"
+#include "Image.h"
 
 #ifdef _WIN32
 #include <sysinfoapi.h>
@@ -45,18 +47,18 @@ public:
 
 	static int Begin();
 	static void WindowLoop(GLFWwindow* window, Logger* Log);
-	static int Cleanup(GLFWwindow* window) {
+	static int Cleanup(GLFWwindow* window, Logger* log) {
 		try {
+			log->write("Cleaning up");
 			ImGui_ImplOpenGL3_Shutdown();
 			ImGui_ImplGlfw_Shutdown();
 			ImGui::DestroyContext();
-
 			glfwDestroyWindow(window);
 			glfwTerminate();
-
 			return 0;
 		}
-		catch (std::exception&) {
+		catch (std::exception& e) {
+			std::cout << e.what() << std::endl;
 			return 1;
 		}
 	}

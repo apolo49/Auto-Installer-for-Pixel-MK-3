@@ -170,7 +170,7 @@ int fileHandling::CreateDirectories(const std::string& strPath) {
 	try
 	{
 		std::string strPathParsed(strPath);
-#ifndef LINUX
+#ifndef __linux__
 		if (strPathParsed[strPathParsed.length() - 1] == '\\' || strPathParsed[strPathParsed.length() - 1] == '/')
 #else
 		if (strPathParsed[strPathParsed.length() - 1] == '/')
