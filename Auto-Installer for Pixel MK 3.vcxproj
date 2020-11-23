@@ -238,9 +238,6 @@
   <ItemGroup>
     <ResourceCompile Include="Auto-Installer for Pixel MK 3.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="icon1.ico" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
