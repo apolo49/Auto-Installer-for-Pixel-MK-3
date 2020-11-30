@@ -32,8 +32,8 @@ int CreateProfile::InstallForge(double* Progress, std::string* ProgressDesc, dou
 		ZeroMemory(&si, sizeof(si));
 		ZeroMemory(&pi, sizeof(pi));
 
-		LPWSTR cmdline = new wchar_t[56];
-		wcscpy(cmdline, L"javaw.exe -jar forge-1.12.2-14.23.5.2854-installer.jar");
+		LPSTR cmdline = new char[56];
+		strcpy(cmdline, "javaw.exe -jar forge-1.12.2-14.23.5.2854-installer.jar");
 		//run the process
 		if (CreateProcess(NULL, cmdline, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi) == 0) {
 			delete[] cmdline;

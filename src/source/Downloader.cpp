@@ -30,7 +30,7 @@ int Downloader::GetFile(const char* url, const char outFileName[FILENAME_MAX], d
 		}
 		return 0;
 	}
-	catch (std::exception& e) {
+	catch (std::exception) {
 		return 1;
 	}
 }

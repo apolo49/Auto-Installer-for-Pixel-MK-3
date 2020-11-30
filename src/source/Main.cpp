@@ -393,13 +393,13 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 				JavaDirs.at(Chosen).path().string()
 	#endif
 			};
-			}
+		}
 		else {
 			paths = { PixelMKResultDir, bufMCDir,"" };
 		}
-		}
-	log->write("Exiting main loop");
 	}
+	log->write("Exiting main loop");
+}
 
 bool Main::CheckForge(std::string MCDir) {
 	if (fileHandling::IsFile(MCDir + "versions/1.12.2-forge-14.23.5.2854/1.12.2-forge-14.23.5.2854.json") &&

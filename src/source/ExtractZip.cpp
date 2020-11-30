@@ -51,7 +51,7 @@ int fileHandling::Extractor::ExtractAllFilesFromZip(const std::string& strDirect
 		}
 	}
 	//Extract all items from archive
-	uint64_t len;
+	size_t len;
 	for (int i = 0; i < zip_get_num_entries(archive, 0); i++) {
 		if (zip_stat_index(archive, i, 0, &sb) == 0) {
 			if (!((std::string(sb.name).rfind("bin/", 0) == 0) || ((ResAndOpts[0] == false) && (std::string(sb.name).rfind("resourcepacks", 0) == 0)) || ((ResAndOpts[1] == false) && (std::find(optionFiles.begin(), optionFiles.end(), sb.name) != optionFiles.end())))) {
@@ -108,6 +108,7 @@ int fileHandling::Extractor::ExtractAllFilesFromZip(const std::string& strDirect
 		std::cout << "Can't close zip archive '" << archive << "'" << std::endl;;
 		return 0;
 	}
+	return 1;
 }
 
 /**
