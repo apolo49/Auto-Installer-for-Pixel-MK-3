@@ -6,17 +6,18 @@ The program itself, if you are smart enough, would be very easy to generalise as
 
 
 ### TODO:
-~~- Add stb image to load in an icon for the GLFW window.~~
+- ~~Add stb image to load in an icon for the GLFW window.~~
 - Generalise using JSON files and _possibly_ upload as an alternative to Technic or FTB, as a native way to install modpacks.
 	-  Remove hardcoded progress multiplier in extract zip function.
 - Remove all system calls for a more secure and faster execution.
-- Test compilation using GCC and other compilers.
-- Make a CMake generator.
+- ~~Test compilation using GCC and other compilers.~~
+- ~~Make a CMake generator.~~
 - Optimise, Optimise, Optimise.
 - Remove unnecessary legacy variables and package more of same-types into vectors or other containers.
 - Improve the download progress struct.
 - Find a better extraction algorithm.
-- Find out more about Java on MacOS and Linux (specifically Debain-based) as documentation is scarce.
-- Windows has CreateProcess function, Unix equivalent for Linux and MacOS???
+- Find out more about Java on MacOS ~~and Linux (specifically Debain-based)~~ as documentation is scarce.
+- Windows has CreateProcess function, Unix equivalent for Linux __(Possibly posix_spawn())__ and MacOS???
 - Make mainloop function smaller
+- Test on MacOS.
  
