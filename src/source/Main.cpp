@@ -177,8 +177,8 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	const char* homedir;
 	if ((homedir = getenv("HOME")) == NULL)
 		homedir = getpwuid(getuid())->pw_dir;
-	if (fileHandling::IsDirectory(std::string(getenv("homedir")).append("/.minecraft/"))) {
-		defaultMCDir = std::string(getenv("homedir")).append("/.minecraft/");
+	if (fileHandling::IsDirectory(std::string(getenv("HOME")).append("/.minecraft/"))) {
+		defaultMCDir = std::string(getenv("HOME")).append("/.minecraft/");
 	}
 	else
 		log->write("Failed to find .minecraft location", 1);
