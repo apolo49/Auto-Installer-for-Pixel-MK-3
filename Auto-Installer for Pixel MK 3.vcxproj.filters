@@ -121,7 +121,7 @@
     <Font Include="src\source\NexaSlab.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Auto-Installer for Pixel MK 3.rc">
+    <ResourceCompile Include="Auto-Installer_for_Pixel_MK_3.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -49,7 +49,11 @@ int Main::Begin() {
 	}
 
 #elif defined(__linux__)
-	MemoryKB = sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE);
+	struct sysinfo si;
+	if (sysinfo(&si) == 0)
+		MemoryKB = si.totalram;
+	else
+		MemoryKB = 32 * 1024 * 1024 * 1024;
 
 #elif defined(__APPLE__)
 	MemoryKB = sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE);
@@ -155,8 +159,8 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	bool open = true;
 
 	log->write("Getting .minecraft location");
-#if defined(_WIN32)
 	std::string defaultMCDir = "";
+#if defined(_WIN32)
 	if (fileHandling::IsDirectory(std::string(getenv("APPDATA")).append("/.minecraft/"))) {
 		defaultMCDir = std::string(getenv("APPDATA")).append("/.minecraft/");
 	}
@@ -166,18 +170,26 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	log->write("Setting Java location");
 	std::string JavaDir = "C:/Program Files/Java";
 #elif defined(__APPLE__)
-	std::string defaultMCDir = "~/Library/Application Support/minecraft/";
+	defaultMCDir = "~/Library/Application Support/minecraft/";
 	std::string JavaDir = "~/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/"
 #elif defined(__linux__)
-	std::string JavaDir = "usr/bin/java";
-	std::string defaultMCDir = "~/.minecraft/";
+	std::string JavaDir = "/lib/jvm/";
+	const char* homedir;
+	if ((homedir = getenv("HOME")) == NULL)
+		homedir = getpwuid(getuid())->pw_dir;
+	if (fileHandling::IsDirectory(std::string(getenv("homedir")).append("/.minecraft/"))) {
+		defaultMCDir = std::string(getenv("homedir")).append("/.minecraft/");
+	}
+	else
+		log->write("Failed to find .minecraft location", 1);
+
 #endif
 	static char bufMCDir[256];
 	strcpy(bufMCDir, defaultMCDir.c_str());
 
 	log->write("Identifying all Java directories");
-	std::vector<std::filesystem::directory_entry> JavaDirs;
 #ifdef _WIN32
+	std::vector<std::filesystem::directory_entry> JavaDirs;
 	if (fileHandling::IsDirectory(JavaDir)) {
 		for (const std::filesystem::directory_entry& p : std::filesystem::directory_iterator(JavaDir)) {
 			if (p.is_directory() && (p.path().filename().string().find("jre") != std::string::npos)) {
@@ -187,7 +199,19 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 		}
 	}
 #else
-	JavaDirs.push_back(std::filesystem::path(JavaDir));
+	std::vector<std::filesystem::directory_entry> JavaDirs;
+	if (fileHandling::IsDirectory(JavaDir)) {
+		for (const std::filesystem::directory_entry& p : std::filesystem::directory_iterator(JavaDir)) {
+			if (p.is_directory()) {
+				for (const std::filesystem::directory_entry& q : std::filesystem::directory_iterator(p)) {
+					if (q.is_directory() && (q.path().filename().string().find("jre") != std::string::npos)) {
+						JavaDirs.push_back(p);
+						log->write("Added Java directory " + p.path().string());
+					}
+				}
+			}
+		}
+	}
 #endif
 	log->write("Identifying amount of Java directories");
 	size_t AmtOfJavaDirs = JavaDirs.size();
@@ -201,6 +225,14 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 	boost::container::vector<std::string> paths;
 	int MemoryGB = 9;
 	int MaxMemory;
+#ifdef __linux__
+
+	if (MemoryKB % 1024 != 0) {
+		MemoryKB = MemoryKB % 1024 >= 512 ? ((MemoryKB + 1024) - (MemoryKB % 1024)) : (MemoryKB - (MemoryKB % 1024));
+	}
+	MemoryKB /= 1024;
+
+#endif
 
 	if (MemoryKB != 0)
 		MaxMemory = ((MemoryKB / 1024) / 1024) - 4;
@@ -244,7 +276,7 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 				MCDir.Open();
 			}
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__linux__)
 			if (AmtOfJavaDirs > 0) {
 				ImGui::Text("Choose Java Runtime Environment");
 				for (uint8_t i = 0; i < AmtOfJavaDirs; i++) {
@@ -385,12 +417,12 @@ void Main::WindowLoop(GLFWwindow* window, Logger* log) {
 		options[3] = CheckForge(bufMCDir);
 		if (JavaDirs.size() != 0) {
 			paths = { PixelMKResultDir, bufMCDir,
-	#ifdef _WIN32
+	#if defined(_WIN32)
 				JavaDirs.at(Chosen).path().string().append("/bin/javaw.exe")
 	#elif defined(__APPLE__)
-				JavaDirs.at(Chosen).path().string()
+				JavaDirs.at(Chosen).string()
 	#elif defined(__linux__)
-				JavaDirs.at(Chosen).path().string()
+				JavaDirs.at(Chosen).path().string().append("/jre/bin/java")
 	#endif
 			};
 		}

@@ -2,7 +2,11 @@
 #include <string>
 #include <functional>
 #include <algorithm>
-#include <io.h>
+#ifdef _WIN32	
+	#include <io.h>
+#else
+	#include <sys/io.h>
+#endif
 #include <iostream>
 #include <fstream>
 #include <boost/container/vector.hpp>

@@ -26,10 +26,10 @@ public:
 	static int Begin(boost::container::vector<bool> options, boost::container::vector<std::string> paths, int Memory, double* Percent, double* Progress, std::string* ProgressDesc);
 
 private:
-#ifdef _WIN32
+
 	static int InstallForge(double* Progress, std::string* ProgressDesc, double* Percent);
 	static int GrabPack(double* Progress, std::string PxMKDir, std::string* ProgressDesc, double* Percent);
-#endif
+
 	static int CreatePxMKDir(std::string PxMKDir);
 	static int AddProfileToProfiles(std::string MCDir, bool JVMArgs, bool IsJavaInstalled, int Memory, std::string PxMKDir, std::string JavaPath);
 	static int InstallPack(std::string PxMKDir, double* Progress, std::string* ProgressDesc, double* Percent, boost::container::vector<bool> ResAndOpts);

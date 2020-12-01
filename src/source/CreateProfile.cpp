@@ -26,16 +26,16 @@ int CreateProfile::InstallForge(double* Progress, std::string* ProgressDesc, dou
 		return 1;
 	try {
 #ifdef _WIN32
-		STARTUPINFO si;
+		LPSTARTUPINFOW si;
 		PROCESS_INFORMATION pi;
 
 		ZeroMemory(&si, sizeof(si));
 		ZeroMemory(&pi, sizeof(pi));
 
-		LPSTR cmdline = new char[56];
-		strcpy(cmdline, "javaw.exe -jar forge-1.12.2-14.23.5.2854-installer.jar");
+		LPWSTR cmdline = new wchar_t[56];
+		wcscpy(cmdline, L"javaw.exe -jar forge-1.12.2-14.23.5.2854-installer.jar");
 		//run the process
-		if (CreateProcess(NULL, cmdline, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi) == 0) {
+		if (CreateProcessW(NULL, cmdline, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, si, &pi) == 0) {
 			delete[] cmdline;
 			remove("forge-1.12.2-14.23.5.2854-installer.jar");
 			std::cout << "Failed to run forge installer:\n" << GetLastError() << std::endl;

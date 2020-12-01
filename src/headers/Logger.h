@@ -32,13 +32,12 @@ public:
 
 	int open(std::string name = "log") {
 		if (!HasBeenOpened) {
-			args = std::ofstream::out | std::ofstream::trunc | std::ofstream::binary;
+			log.open(name.append(".log"), std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
 			HasBeenOpened = 1;
 		}
 		else {
-			args = std::ofstream::out | std::ofstream::app | std::ofstream::binary;
+			log.open(name.append(".log"), std::ofstream::out | std::ofstream::app | std::ofstream::binary);
 		}
-		log.open(name.append(".log"), args);
 		if (!log.good()) { std::cout << "Failed to open log" << std::endl; return 1; }
 		else {
 			log.exceptions(std::ifstream::badbit);

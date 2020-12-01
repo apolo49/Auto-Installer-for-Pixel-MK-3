@@ -8,7 +8,7 @@
 #include <thread>
 #include <future>
 #include <chrono>
-#include < fcntl.h >
+#include <fcntl.h>
 #include "../vender/imgui/imgui.h"
 #include "../vender/imgui/imgui_impl_glfw.h"
 #include "../vender/imgui/imgui_impl_opengl3.h"
@@ -24,11 +24,11 @@
 
 #elif __linux__
 #include <unistd.h>
-MemoryKB = sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE);
+#include <pwd.h>
+#include <sys/sysinfo.h>
 
 #elif __APPLE__
 #include <unistd.h>
-MemoryKB = sysconf(_SC_PHYS_PAGES) * sysconf(_SC_PAGESIZE);
 #endif
 
 class Main

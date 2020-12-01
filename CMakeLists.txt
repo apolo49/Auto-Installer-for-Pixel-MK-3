@@ -35,7 +35,7 @@ if(WIN32)
 elseif(APPLE)
 	link_directories(lib/Apple/Boost lib/Apple/curl lib/Apple/glew lib/Apple/glfw lib/Apple/jsoncpp lib/Apple/libcrypto lib/Apple/libzip lib/Apple/miniz lib/Apple/zlib)
 else()
-	link_directories(lib/Linux/Boost lib/Linux/curl lib/Linux/glew lib/Linux/glfw lib/Linux/jsoncpp lib/Linux/libcrypto lib/Linux/libzip lib/Linux/miniz lib/Linux/zlib)
+	link_directories(lib/Linux/Boost lib/Linux/Curl lib/Linux/glew lib/Linux/glfw lib/Linux/jsoncpp lib/Linux/libcrypto lib/Linux/libzip lib/Linux/miniz lib/Linux/zlib lib/Linux/bz2 lib/Linux/lzma)
 endif()
 
 #Add files
@@ -48,18 +48,6 @@ file(GLOB_RECURSE SOURCE_FILES
 add_executable(Installer ${SOURCE_FILES})
 target_include_directories(Installer PUBLIC include/)
 
-#Add link libraries to project
-target_link_libraries(Installer 
-	libcurl
-	libcrypto
-	libssl
-	libboost_date_time-vc142-mt-sgd-x32-1_73
-	libboost_regex-vc142-mt-sgd-x32-1_73
-	libboost_coroutine-vc142-mt-sgd-x32-1_73
-	libboost_system-vc142-mt-sgd-x32-1_73
-	glew32s
-	glfw3
-)
 
 #Add universal preprocessor definitions
 add_definitions(
@@ -71,9 +59,23 @@ add_definitions(
 
 if(MSVC)
 	find_package(OpenGL REQUIRED)
+	
+	target_sources(Installer PUBLIC
+		Auto-Installer_for_Pixel_MK_3.rc
+		resource.h
+	)
 
 	#Add Curl, GLEW and GLFW dependencies
 	target_link_libraries(Installer
+		libcurl
+		libcrypto
+		libssl
+		libboost_date_time-vc142-mt-sgd-x32-1_73
+		libboost_regex-vc142-mt-sgd-x32-1_73
+		libboost_coroutine-vc142-mt-sgd-x32-1_73
+		libboost_system-vc142-mt-sgd-x32-1_73
+		glew32s
+		glfw3
 		minizip
 		zip
 		zlibstatic
@@ -103,17 +105,41 @@ elseif(APPLE)
 	#Add Curl dependencies
 	target_link_libraries(Installer ldap z)
 	
-else()
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
+	configure_file(Auto-Installer-for-Pixel-MK-3.desktop.in Auto-Installer-for-Pixel-MK-3.desktop)
 
 	target_link_libraries(Installer
-		libminiz
-		libzip
-		libz
-		libzstd
-		libjsoncpp
-		opengl
+		curl
+		ssl
+		crypto
+		boost_date_time
+		boost_regex
+		boost_coroutine
+		boost_system
+		GLEW
+		glfw3
+		miniz
+		zip
+		z
+		zstd
+		jsoncpp
+		GL
+		GLU
 		ldap
+		dl
+		X11
+		lzma
+		bz2
 	)
+	
+	# Install desktop entry
+    install(FILES ${CMAKE_BINARY_DIR}/Auto-Installer-for-Pixel-MK-3.desktop DESTINATION /usr/share/applications )
+
+    # Install icon
+    install(FILES PixelMK3.ico DESTINATION /usr/share/icons/hicolor/scalable/apps)
+	
+	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
 
 endif()
 

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=@Installer_VERSION_MAJOR@.@Installer_VERSION_MINOR@
+Name=Auto-Installer for Pixel MK 3
+Comment=Installer for the Pixel MK 3 modpack to add the profile and modpack to the native Minecraft Launcher
+Exec=Installer
+Icon=PixelMK3.ico
+Terminal=false
+Type=Application
