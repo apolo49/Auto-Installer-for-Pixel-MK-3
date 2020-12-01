@@ -17,7 +17,7 @@ The program itself, if you are smart enough, would be very easy to generalise as
 - Improve the download progress struct.
 - Find a better extraction algorithm.
 - Find out more about Java on MacOS ~~and Linux (specifically Debain-based)~~ as documentation is scarce.
-- Windows has CreateProcess function, Unix equivalent for Linux __(Possibly posix_spawn())__ and MacOS???
+- Windows has CreateProcess function, Unix equivalent for Linux _(Possibly posix_spawn())_ and MacOS???
 - Make mainloop function smaller
 - Test on MacOS.
  
