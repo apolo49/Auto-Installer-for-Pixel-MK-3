@@ -37,6 +37,10 @@ public:
 	static std::future<int> Install;
 	static uint64_t PUSystemMemory;
 	static long MemoryKB;
+	static ImVec4 clear_colour;
+	static std::vector<ImFont*> Fonts;
+	static Logger* log;
+	static GLFWwindow* window;
 
 	template<typename T, typename U>
 	static T safer_cast(const U& from) {
@@ -46,10 +50,11 @@ public:
 	}
 
 	static int Begin();
-	static void WindowLoop(GLFWwindow* window, Logger* Log);
-	static int Cleanup(GLFWwindow* window, Logger* log) {
+	static void WindowLoop();
+
+	static int Cleanup() {
 		try {
-			log->write("Cleaning up");
+			log->write("Cleaning up.");
 			ImGui_ImplOpenGL3_Shutdown();
 			ImGui_ImplGlfw_Shutdown();
 			ImGui::DestroyContext();
@@ -68,6 +73,11 @@ private:
 	{
 		fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 	}
-
+	static void BeginFrame();
 	static bool CheckForge(std::string MCDir);
+	static void CreateFonts();
+	static void EndFrame();
+	static void GetMemory();
+	static std::string MinecraftDirLocator();
+	static std::vector<std::filesystem::directory_entry> JavaDirLocator();
 };

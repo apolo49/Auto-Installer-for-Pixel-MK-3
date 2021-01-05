@@ -1,5 +1,8 @@
 #include <cinttypes>
 #include <string>
+#ifdef _WIN32
+#include <shellapi.h>
+#endif
 #include "../vender/imgui/imgui.h"
 #include "../vender/imgui/imgui_impl_glfw.h"
 #include "../vender/imgui/imgui_impl_opengl3.h"
@@ -31,11 +34,11 @@ namespace ImGui {
 			if (ImGui::IsMouseClicked(0))
 			{
 #ifdef _WIN32
-				system(std::string("start ").append(URL_).c_str());
+				ShellExecuteA(NULL, "open", URL_, NULL, NULL, SW_SHOWNORMAL);
 #elif defined(__APPLE__)
-				system(std::string("open ").append(URL_).c_str());
+				system((std::string("open ") + std::string(URL_)).c_str());
 #elif defined(__linux__)
-				system(std::string("xdg-open ").append(URL_).c_str());
+				system((std::string("xdg-open ") + std::string(URL_)).c_str());
 #endif
 			}
 			AddUnderLine(ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered]);
