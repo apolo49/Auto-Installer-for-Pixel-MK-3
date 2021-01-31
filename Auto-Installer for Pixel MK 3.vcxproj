@@ -205,6 +205,7 @@
     <ClInclude Include="src\headers\ImFileBrowser.h" />
     <ClInclude Include="src\headers\Logger.h" />
     <ClInclude Include="src\headers\Main.h" />
+    <ClInclude Include="src\headers\Mods.h" />
     <ClInclude Include="src\headers\Progress Indicators.h" />
     <ClInclude Include="src\headers\TextUrl.h" />
     <ClInclude Include="src\vender\stb_image.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="src\source\CreateProfile.cpp" />
     <ClCompile Include="src\source\Downloader.cpp" />
     <ClCompile Include="src\source\ExtractZip.cpp" />
+    <ClCompile Include="src\source\Logger.cpp" />
     <ClCompile Include="src\source\Main.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\vender\imgui\imgui.cpp" />

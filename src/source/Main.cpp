@@ -253,8 +253,11 @@ void Main::WindowLoop() {
 
 	//TEST OPTIONS ONLY, MUST BE APPLIED IN PREPROCESSOR BEFORE COMPILATION
 	int MaxMemory;
-#if SMALL_MEM_MODE
-	MaxMemory = 8;
+#if TINY_MEM_MODE
+	MaxMemory = 4;
+
+#elif SMALL_MEM_MODE
+	MaxMemory = 6;
 
 #elif LARGE_MEM_MODE
 	MaxMemory = 32;
@@ -262,18 +265,20 @@ void Main::WindowLoop() {
 	GetMemory();
 
 	if (MemoryKB != 0)
-		MaxMemory = ((MemoryKB / 1024) / 1024) - 4;
+		MaxMemory = ((MemoryKB / 1024) / 1024);
 	else
 		MaxMemory = 32;
 #endif
 
-	int MemoryGB = 9;
-	int Result = -1;
+	int MemoryGB = 6;
+	uint8_t Result = 0xFF;
 
 	double Percent = 0;
 	double Progress = 0;
 	std::string ProgressDesc = "";
-	bool EnteredCode = false;
+	bool UnsafeMode = false;
+	bool MainWindow = false;
+	bool ModWindow = false;
 	char code[18] = "";
 
 	log->write("Entering main loop.");
@@ -293,156 +298,20 @@ void Main::WindowLoop() {
 		ImGui::PopFont();
 
 		ImGui::PushFont(Fonts[1]);
-		if ((MaxMemory > 9 || EnteredCode)) {
-			ImGui::Text(".minecraft directory");
-			ImGui::InputText("##.McDir", bufMCDir, 256, ImGuiInputTextFlags_AutoSelectAll);
-			if (ImGui::Button("Choose Dir##MCDir")) {
-				MCDir.Open();
-			}
-
-#if defined(_WIN32) || defined(__linux__)
-			if (AmtOfJavaDirs > 0) {
-				ImGui::Text("Choose Java Runtime Environment");
-				for (uint8_t i = 0; i < AmtOfJavaDirs; i++) {
-					ImGui::RadioButton(JavaDirs.at(i).path().filename().string().c_str(), &Chosen, i);
-					if (i != AmtOfJavaDirs - 1) {
-						ImGui::SameLine();
-					}
-				}
+		if ((MaxMemory > 6 || UnsafeMode)) {
+			if (((!UnsafeMode) || MainWindow) && MainWindow)
+				MainScreen(bufMCDir, MCDir, AmtOfJavaDirs, JavaDirs, Chosen, PixelMKResultDir, PXMKDir, UnsafeMode, MemoryGB, MaxMemory, Percent, Progress,
+					Result, options, ProgressDesc, paths, MainWindow);
+			else if (ModWindow) {
+				ListOfModsWindow(ModWindow);
 			}
 			else {
-				ImGui::Text("You do not have a Java Runtime Environment. You can download Java here:");
-				ImGui::TextURL("java.com", "https://java.com/en/download/manual.jsp");
-			}
-#endif
-
-			ImGui::Text("Where to place Pixel MK 3?");
-			ImGui::InputText("##PixelMKDir", PixelMKResultDir, 256);
-			if (ImGui::Button("Choose Dir##PXMKDir")) {
-				PXMKDir.Open();
-			}
-
-			ImGui::Text("How much memory do you wish to give the modpack (in GB)?");
-			ImGui::SliderInt("##Memory", &MemoryGB, 9, MaxMemory);
-
-			ImGui::Checkbox("Do you want the PureBDCraft Resourcepack that pairs with this modpack?", &options[0]);
-			ImGui::Checkbox("Do you want the default option settings for this modpack?", &(options[1]));
-			ImGui::Checkbox("Do you want the best JVM arguments for performance installed to the modpack?", &options[2]);
-
-			if (!options[3]) {
-				ImGui::Text("The correct version of Forge has not been installed. The installer will install this for you.");
-			}
-			if (Percent == 0.0f) {
-				if (strlen(PixelMKResultDir) != 0 && strlen(bufMCDir) != 0 && AmtOfJavaDirs > 0) {
-					if (ImGui::Button("Install")) {
-						Result = -1;
-						Install = std::async(CreateProfile::Begin, options, paths, MemoryGB, &Percent, &Progress, &ProgressDesc);
-					}
-				}
-			}
-			if (Install.valid()) {
-				auto status = Install.wait_for(std::chrono::milliseconds(0));
-				if (status == std::future_status::ready) {
-					Result = Install.get();
-				}
-				else {
-					ImGui::ProgressBar(Percent);
-					if (Progress != 0.0f) {
-						ImGui::Text(ProgressDesc.c_str());
-						ImGui::ProgressBar(Progress);
-					}
-				}
-			}
-
-			if (Result == 4) {
-				ImGui::Text("The install failed due to forge being unable to install. Are you connected to Wi-Fi?");
-			}
-			else if (Result == 3) {
-				ImGui::Text("The install failed due to the Pixel MK Directory being unable to be created. Did you enter the path correctly?");
-			}
-			else if (Result == 2) {
-				ImGui::Text("The install failed due to an issue with writing to launcher_profiles.json. Did you enter the /.minecraft directory correctly?");
-			}
-			else if (Result == 1) {
-				ImGui::Text("The install failed due to being unable to download the modpack or install the modpack.");
-			}
-			else if (Result == 0) {
-				ImGui::ProgressBar(1);
-				ImGui::Text("Done.");
-				Percent = 0.0f;
-				Progress = 0.0f;
-			}
-
-			MCDir.Display();
-
-			if (MCDir.HasSelected())
-			{
-				strcpy(bufMCDir, MCDir.GetSelected().string().c_str());
-				MCDir.ClearSelected();
-			}
-
-			PXMKDir.Display();
-			if (PXMKDir.HasSelected())
-			{
-				strcpy(PixelMKResultDir, PXMKDir.GetSelected().string().c_str());
-				PXMKDir.ClearSelected();
-			}
-			ImGui::PopFont();
-			ImGui::PushFont(Fonts[0]);
-			//Update options array, [Do you want resource pack, Do you want in game options, Do you want JVM args, Is Forge Installed]
-			options[3] = CheckForge(bufMCDir);
-			//Check for Java Dirs
-			if (JavaDirs.size() != 0) {
-				paths = { PixelMKResultDir, bufMCDir,
-		#if defined(_WIN32)
-					JavaDirs.at(Chosen).path().string().append("/bin/javaw.exe")
-		#elif defined(__APPLE__)
-					JavaDirs.at(Chosen).path().string()
-		#elif defined(__linux__)
-					JavaDirs.at(Chosen).path().string().append("/jre/bin/java")
-		#endif
-				};
-			}
-			else {
-				paths = { PixelMKResultDir, bufMCDir,"" };
+				TitleScreen(MainWindow, ModWindow);
 			}
 		}
 		else {
-			ImGui::Text("Your installed memory is less than 13GB.\nYou need at least 9GB to run the modpack and at least 13GB to also run your OS smoothly.");
-			if (MaxMemory >= 8) {
-				ImGui::Text("If you have been given a passcode to run this modpack then please enter it below.");
-				ImGui::InputText("##Code", code, sizeof(code));
-
-				std::string a("5O 78 6C 4d 4b 3E");
-				if (!a.compare(code)) {
-					MaxMemory = MaxMemory + 4;
-					EnteredCode = 1;
-				}
-			}
-			ImGui::PopFont();
-			ImGui::PushFont(Fonts[0]);
-			ImGui::Text("If you wish to buy more RAM, you can look at these retailers:");
-			ImGui::TextURL("Amazon", "https://www.amazon.co.uk/b/?node=430511031&ref_=Oct_s9_apbd_odnav_hd_bw_bT0akp_0&pf_rd_r=BC0NWPQG7Q1PA4BSVDS3&pf_rd_p=d705626f-64c9-52fa-8b95-df0de1496db3&pf_rd_s=merchandised-search-10&pf_rd_t=BROWSE&pf_rd_i=428655031");
-			ImGui::TextURL("Box", "https://www.box.co.uk/memory/sort/1/refine/49019~147657$49019~148264$49019~197745$49019~67690$49019~67704");
-			ImGui::TextURL("Ebuyer", "https://www.ebuyer.com/store/Components/cat/Memory---PC");
-			ImGui::TextURL("Newegg", "https://www.newegg.com/global/uk-en/p/pl?N=101582542%20500000512%20500001024%20500002048%20500004096%20500008192%20500016384&Order=1");
-			ImGui::TextURL("Nova Tech", "https://www.novatech.co.uk/products/components/memory-pc/");
-			ImGui::TextURL("Overclockers UK", "https://www.overclockers.co.uk/pc-components/memory");
-			ImGui::TextURL("Scan", "https://www.scan.co.uk/shop/computer-hardware/memory-ram/all");
-			ImGui::Text("I am not sponsored by any of these.");
+			NotEnoughMemWindow(MaxMemory, code, UnsafeMode, MainWindow);
 		}
-		ImGui::PopFont();
-		ImGui::PushFont(Fonts[1]);
-
-		std::time_t currentTime = std::time(NULL);
-		ImGui::Text(std::ctime(&currentTime));
-
-		ImGui::PopFont();
-		ImGui::PushFont(Fonts[0]);
-
-		ImGui::Text("Made by Joe Targett, if you have any problems please contact me @ Joe.Targett@outlook.com");
-
-		ImGui::PopFont();
 		EndFrame();
 	}
 	log->write("Exiting main loop.");
@@ -458,12 +327,258 @@ void Main::BeginFrame() {
 	ImGui::NewFrame();
 }
 
+void Main::ListOfModsWindow(bool& ModWindow) {
+	ImGui::Text("This screen is a list of all mods in the modpack.");
+	ImGui::Text("All credit for these mods go to the authors and their amazing efforts for the minecraft community.");
+	ImGui::Text("Without these amazing people and their creations this modpack would not exist.");
+	ImGui::Indent();
+
+	for (int i = 0; i < resource::mods.size(); i++) {
+		try {
+			ImGui::BulletText(resource::mods[i].at(0).c_str());
+			ImGui::Indent();
+			ImGui::BulletText(std::string("Author(s): ").append(resource::mods[i].at(1)).c_str());
+			ImGui::Unindent();
+		}
+		catch (std::exception& e) {
+			//TODO read last printed line to prevent flooding of log
+			log->write(e.what(), 1);
+		}
+	}
+
+	ImGui::Unindent();
+	if (ImGui::Button("back"))
+		ModWindow = false;
+}
+
+/*
+* Title Screen, first screen greeted with when opening unless memory too small.
+*/
+void Main::TitleScreen(bool& MainWindow, bool& ModWindow) {
+	ImGui::Text("Welcome to installing Pixel MK 3.");
+	ImGui::Text("Pixel MK 3 is a kitchen sink modpack that includes many popular mods for Java Minecraft including:");
+	ImGui::Indent();
+	ImGui::BulletText("Aether II");
+	ImGui::BulletText("Applied Energistics 2");
+	ImGui::BulletText("BiblioCraft");
+	ImGui::BulletText("Biomes O Plenty");
+	ImGui::BulletText("BuildCraft");
+	ImGui::BulletText("Dr Zhark's Mo' Creatures");
+	ImGui::BulletText("EnderIO");
+	ImGui::BulletText("ExtraUtils 2");
+	ImGui::BulletText("Galacticraft");
+	ImGui::BulletText("ICBM Classic");
+	ImGui::BulletText("Immersive Engineering");
+	ImGui::BulletText("Industrial Craft 2");
+	ImGui::BulletText("Minecraft Comes Alive!");
+	ImGui::BulletText("Mekanism");
+	ImGui::BulletText("Morph");
+	ImGui::BulletText("Mystcraft");
+	ImGui::BulletText("OpenComputers");
+	ImGui::BulletText("Project Red");
+	ImGui::BulletText("Railcraft");
+	ImGui::BulletText("Thaumcraft");
+	ImGui::BulletText("AND MANY OTHERS!");
+	ImGui::Unindent();
+	ImGui::Text("For a full list of mods please select to go to the modlist down below or check the technic page.");
+	ImGui::Text("As you can see there are many, many mods, over 150 infact! So this modpack requires a minimum of 9GB of RAM");
+	ImGui::Text("to run a world and at least 12GB of RAM to run smoothly on my tests on my computer.");
+	ImGui::Text("For my specs please see my steam account.");
+	ImGui::Text("This installer will give the smoothest run of any versions of this modpack, if configured correctly.");
+	ImGui::Text("Built into this installer are the JVM arguments for a smoother experience with added Garbage Collection Threads.");
+	ImGui::Text("If you are seeing this page that means you will definitely have no problems running this modpack.");
+	if (ImGui::Button("Configure installation", ImVec2(250, 30)))
+		MainWindow = true;
+	ImGui::SameLine();
+	if (ImGui::Button("List of Mods", ImVec2(250, 30)))
+		ModWindow = true;
+	if (ImGui::Button("Quit", ImVec2(508, 30))) {
+		glfwSetWindowShouldClose(window, true);
+	}
+}
+
+/*
+* Window For when there is not enough memory in the system. Memory will be checked before every update
+*/
+void Main::NotEnoughMemWindow(int& MaxMemory, char* code, bool& UnsafeMode, bool& MainWindow) {
+	ImGui::Text("Your installed memory is less than 10GB.\nYou need at least 6GB to run the modpack and at least 10GB to also run your OS smoothly.");
+	if ((MaxMemory) > 5) {
+		ImGui::Text("If you have been given a passcode to run this modpack then please enter it below.");
+		ImGui::InputText("##Code", code, 18);
+
+		std::string a("5O 78 6C 4d 4b 3E");
+		if (!a.compare(code)) {
+			UnsafeMode = true;
+			MainWindow = true;
+		}
+	}
+	ImGui::PopFont();
+	ImGui::PushFont(Fonts[0]);
+	ImGui::Text("If you wish to buy more RAM, you can look at these retailers:");
+	ImGui::TextURL("Amazon", "https://www.amazon.co.uk/b/?node=430511031&ref_=Oct_s9_apbd_odnav_hd_bw_bT0akp_0&pf_rd_r=BC0NWPQG7Q1PA4BSVDS3&pf_rd_p=d705626f-64c9-52fa-8b95-df0de1496db3&pf_rd_s=merchandised-search-10&pf_rd_t=BROWSE&pf_rd_i=428655031");
+	ImGui::TextURL("Box", "https://www.box.co.uk/memory/sort/1/refine/49019~147657$49019~148264$49019~197745$49019~67690$49019~67704");
+	ImGui::TextURL("Ebuyer", "https://www.ebuyer.com/store/Components/cat/Memory---PC");
+	ImGui::TextURL("Newegg", "https://www.newegg.com/global/uk-en/p/pl?N=101582542%20500000512%20500001024%20500002048%20500004096%20500008192%20500016384&Order=1");
+	ImGui::TextURL("Nova Tech", "https://www.novatech.co.uk/products/components/memory-pc/");
+	ImGui::TextURL("Overclockers UK", "https://www.overclockers.co.uk/pc-components/memory");
+	ImGui::TextURL("Scan", "https://www.scan.co.uk/shop/computer-hardware/memory-ram/all");
+	ImGui::Text("I am not sponsored by any of these.");
+}
+
+/*
+* The main screen set up and execution.
+*/
+void Main::MainScreen(char* bufMCDir, ImGui::FileBrowser& MCDir, size_t& AmtOfJavaDirs, std::vector<std::filesystem::directory_entry>& JavaDirs,
+	int& Chosen, char* PixelMKResultDir, ImGui::FileBrowser& PXMKDir, bool& UnsafeMode, int& MemoryGB, int& MaxMemory, double& Percent, double& Progress,
+	uint8_t& Result, boost::container::vector<bool>& options, std::string& ProgressDesc, boost::container::vector<std::string>& paths, bool& MainWindow) {
+	ImGui::Text(".minecraft directory");
+	ImGui::InputText("##.McDir", bufMCDir, 256, ImGuiInputTextFlags_AutoSelectAll);
+	if (ImGui::Button("Choose Dir##MCDir")) {
+		MCDir.Open();
+	}
+
+#if defined(_WIN32) || defined(__linux__)
+	if (AmtOfJavaDirs > 0) {
+		ImGui::Text("Choose Java Runtime Environment");
+		for (uint8_t i = 0; i < AmtOfJavaDirs; i++) {
+			ImGui::RadioButton(JavaDirs.at(i).path().filename().string().c_str(), &Chosen, i);
+			if (i != AmtOfJavaDirs - 1) {
+				ImGui::SameLine();
+			}
+		}
+	}
+	else {
+		ImGui::Text("You do not have a Java Runtime Environment. You can download Java here:");
+		ImGui::TextURL("java.com", "https://java.com/en/download/manual.jsp");
+	}
+#endif
+
+	ImGui::Text("Where to place Pixel MK 3?");
+	ImGui::InputText("##PixelMKDir", PixelMKResultDir, 256);
+	if (ImGui::Button("Choose Dir##PXMKDir")) {
+		PXMKDir.Open();
+	}
+
+	ImGui::Text("How much memory do you wish to give the modpack (in GB)?");
+	if (UnsafeMode) {
+		ImGui::PopFont();
+		ImGui::PushFont(Fonts[2]);
+		ImGui::Text("UNSAFE MODE IS ACTIVATED DO BE AWARE YOUR\nCOMPUTER WILL SLOW DOWN CONSIDERABLY\nIF YOU DO NOT LEAVE MORE THAN 2GB TO RUN THE OS");
+		ImGui::PopFont();
+		ImGui::PushFont(Fonts[1]);
+		ImGui::SliderInt("##Memory", &MemoryGB, 6, MaxMemory);
+	}
+	else
+		ImGui::SliderInt("##Memory2", &MemoryGB, 6, MaxMemory - 4);
+
+	ImGui::Checkbox("Do you want the PureBDCraft Resourcepack that pairs with this modpack?", &options[0]);
+	ImGui::Checkbox("Do you want the default option settings for this modpack?", &(options[1]));
+	ImGui::Checkbox("Do you want the best JVM arguments for performance installed to the modpack?", &options[2]);
+
+	if ((MaxMemory - 4) > 5)
+		ImGui::Checkbox("Unsafe mode?", &(UnsafeMode));
+
+	if (!options[3]) {
+		ImGui::Text("The correct version of Forge has not been installed. The installer will install this for you.");
+	}
+	if (Percent == 0.0f) {
+		if (strlen(PixelMKResultDir) != 0 && strlen(bufMCDir) != 0 && AmtOfJavaDirs > 0) {
+			if (ImGui::Button("Install")) {
+				Result = -1;
+				Install = std::async(CreateProfile::Begin, options, paths, MemoryGB, &Percent, &Progress, &ProgressDesc);
+			}
+		}
+	}
+	if (Install.valid()) {
+		auto status = Install.wait_for(std::chrono::milliseconds(0));
+		if (status == std::future_status::ready) {
+			Result = Install.get();
+		}
+		else {
+			ImGui::ProgressBar(Percent);
+			if (Progress != 0.0f) {
+				ImGui::Text(ProgressDesc.c_str());
+				ImGui::ProgressBar(Progress);
+			}
+		}
+	}
+
+	if (Result == 4) {
+		ImGui::Text("The install failed due to forge being unable to install. Are you connected to Wi-Fi?");
+	}
+	else if (Result == 3) {
+		ImGui::Text("The install failed due to the Pixel MK Directory being unable to be created. Did you enter the path correctly?");
+	}
+	else if (Result == 2) {
+		ImGui::Text("The install failed due to an issue with writing to launcher_profiles.json. Did you enter the /.minecraft directory correctly?");
+	}
+	else if (Result == 1) {
+		ImGui::Text("The install failed due to being unable to download the modpack or install the modpack.");
+	}
+	else if (Result == 0) {
+		ImGui::ProgressBar(1);
+		ImGui::Text("Done.");
+		Percent = 0.0f;
+		Progress = 0.0f;
+	}
+
+	MCDir.Display();
+
+	if (MCDir.HasSelected())
+	{
+		strcpy(bufMCDir, MCDir.GetSelected().string().c_str());
+		MCDir.ClearSelected();
+	}
+
+	PXMKDir.Display();
+	if (PXMKDir.HasSelected())
+	{
+		strcpy(PixelMKResultDir, PXMKDir.GetSelected().string().c_str());
+		PXMKDir.ClearSelected();
+	}
+
+	if ((MaxMemory - 4) > 8) {
+		if (ImGui::Button("Back")) {
+			MainWindow = false;
+		}
+	}
+
+	ImGui::PopFont();
+	ImGui::PushFont(Fonts[0]);
+	//Update options array, [Do you want resource pack, Do you want in game options, Do you want JVM args, Is Forge Installed]
+	options[3] = CheckForge(bufMCDir);
+	//Check for Java Dirs
+	if (JavaDirs.size() != 0) {
+		paths = { PixelMKResultDir, bufMCDir,
+#if defined(_WIN32)
+			JavaDirs.at(Chosen).path().string().append("/bin/javaw.exe")
+#elif defined(__APPLE__)
+			JavaDirs.at(Chosen).path().string()
+#elif defined(__linux__)
+			JavaDirs.at(Chosen).path().string().append("/jre/bin/java")
+#endif
+		};
+	}
+	else {
+		paths = { PixelMKResultDir, bufMCDir,"" };
+	}
+}
+
 /*
 * End Frame Render.
 * Gets Display dimensions and Creates the framebuffer and viewport, sets the clear colour and swaps buffers.
 */
 void Main::EndFrame() {
 	int display_w, display_h;
+	std::time_t currentTime = std::time(NULL);
+
+	ImGui::PopFont();
+	ImGui::PushFont(Fonts[1]);
+	ImGui::Text(std::ctime(&currentTime));
+	ImGui::PopFont();
+	ImGui::PushFont(Fonts[0]);
+	ImGui::Text("Made by Joe Targett, if you have any problems please contact me @ Joe.Targett@outlook.com");
+	ImGui::PopFont();
 	ImGui::End();
 	ImGui::Render();
 	glfwGetFramebufferSize(window, &display_w, &display_h);

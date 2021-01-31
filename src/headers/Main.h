@@ -9,15 +9,18 @@
 #include <future>
 #include <chrono>
 #include <fcntl.h>
+
 #include "../vender/imgui/imgui.h"
 #include "../vender/imgui/imgui_impl_glfw.h"
 #include "../vender/imgui/imgui_impl_opengl3.h"
+
 #include "ImFileBrowser.h"
 #include "TextUrl.h"
 #include "CreateProfile.h"
 #include "Font.h"
 #include "Logger.h"
 #include "Image.h"
+#include "Mods.h"
 
 #ifdef _WIN32
 #include <sysinfoapi.h>
@@ -74,6 +77,13 @@ private:
 		fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 	}
 	static void BeginFrame();
+	static void ListOfModsWindow(bool& ModWindow);
+	static void TitleScreen(bool& MainWindow, bool& ModWindow);
+	static void NotEnoughMemWindow(int& MaxMemory, char* code, bool& UnsafeMode, bool& MainWindow);
+	static void MainScreen(char* bufMCDir, ImGui::FileBrowser& MCDir, size_t& AmtOfJavaDirs, std::vector<std::filesystem::directory_entry>& JavaDirs,
+		int& Chosen, char* PixelMKResultDir, ImGui::FileBrowser& PXMKDir, bool& UnsafeMode, int& MemoryGB, int& MaxMemory, double& Percent,
+		double& Progress, uint8_t& Result, boost::container::vector<bool>& options, std::string& ProgressDesc,
+		boost::container::vector<std::string>& paths, bool& MainWindow);
 	static bool CheckForge(std::string MCDir);
 	static void CreateFonts();
 	static void EndFrame();
